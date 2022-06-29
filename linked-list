@@ -1,0 +1,76 @@
+#include <iostream>
+
+using namespace std;
+class Node
+{
+    public:
+    int value;
+    Node* Next;
+};
+
+void print(Node* n)
+{
+    while(n!=NULL)
+    {
+        cout<<n->value<<endl;
+        n=n->Next;
+    }
+}
+void insert_front(Node **head,int newvalue){
+// 1: Prepare a new Node
+Node* newNode=new Node;
+newNode->value=newvalue;
+//2. Put it in front of current head
+newNode->Next= *head;
+//3. Move head of the list to point to the newNode
+*head=newNode;
+}
+void insert_end(Node **head,int newvalue){
+// 1: Prepare a new Node
+Node* newNode=new Node;
+newNode->value=newvalue;
+newNode->Next= NULL;
+//2. if Linked list is empty then newNode is head Node
+while(*head==NULL){
+    *head =newNode;
+    return;
+}
+//3. Find the Last Node
+Node* last =*head;
+while(last->Next!=NULL){
+    last = last->Next;
+}
+//4.Insert newNode after Last Node at end of Linked list
+last->Next = newNode;
+}
+void insert_after(Node *previous,int newvalue){
+//1. Check the Previous Node is Null
+if(previous==NULL){
+    cout<<"Previous cant be NULL";
+    return ;
+}
+//2. Prepare a newNode
+Node* newNode = new Node();
+newNode->value=newvalue;
+//3. Insert newNode After Previous Node
+newNode->Next= previous->Next;
+previous->Next=newNode;
+}
+int main()
+{
+    Node* head =new Node();
+    Node* second =new Node();
+    Node* third= new Node();
+    head->value =1;
+    head->Next =second;
+    second->value =2;
+    second->Next =third;
+    third->value=3;
+    third->Next=NULL;
+    insert_front(&head,0);
+   insert_end(&head,4);
+     insert_after(second,-13);
+
+    print(head);
+    return 0;
+}
